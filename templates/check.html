@@ -1,0 +1,17 @@
+{% extends "layout.html"%}
+{% block content %}
+<body>
+	<div class="container w-50 bg-light-subtle border shadow-lg border-secondary rounded">
+		<form  method="POST" action="" class="text-center">
+			{% for msg in get_flashed_messages() %}
+			<div class="flash">{{msg}}</div>
+			{% endfor %}
+			<h6>Check your email and enter code</h6>
+			<div class="form-contact mb-3 d-inline-block">
+				<input type="text" class="form-control mt-3" placeholder="Code" name="code" maxlength="6" style="width: 80px;">
+				<button class="mb-3 btn btn-outline-light mt-3" style="width: 80px;">Check</button>
+			</div>
+		</form>
+	</div>
+</body>
+{% endblock %}
