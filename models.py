@@ -1,19 +1,20 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
-
 db = SQLAlchemy()
 
 class Article(db.Model):
     __tablename__ = "article"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)
-    date = db.Column(db.DateTime, default=datetime.utcnow().replace(microsecond=0))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
     content = db.Column(db.String(100))
     author_name = db.Column(db.String(50), db.ForeignKey('author.name'))
     likes = db.relationship('Like', backref='article_like', lazy='dynamic')
     comments = db.relationship('Comment', backref='article_comments', lazy='dynamic')
     like_count = db.Column(db.Integer, default=0)
+
+
 
     def __str__(self):
         return self.text
@@ -47,7 +48,7 @@ class Author(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)
-    date = db.Column(db.DateTime, default=datetime.utcnow().replace(microsecond=0))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
     article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     parent_comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
@@ -62,7 +63,7 @@ class Messages(db.Model):
     __tablename__ = "message"
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.Text)
-    date = db.Column(db.DateTime, default=datetime.utcnow().replace(microsecond=0))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
     receiver_id =  db.Column(db.Integer, db.ForeignKey('author.id'))
 
