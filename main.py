@@ -19,13 +19,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DB']
 app.config['FLASK_ADMIN_SWATCH'] = os.environ['ADMIN_THEME']
 app.secret_key = os.environ['SEKRET_KEY']
 app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
-# mail service
+# mail service **
 app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
 app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
 app.config['MAIL_USE_TLS'] = os.environ['MAIL_USE_TLS']
 app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME'] 
 app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
-# blueprint parts
+# blueprint parts **
 app.register_blueprint(author_part)
 app.register_blueprint(article_part)
 app.register_blueprint(serch_part)
