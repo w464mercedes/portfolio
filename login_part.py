@@ -1,6 +1,5 @@
-from flask import render_template, current_app
-from flask import render_template, redirect, Blueprint
-from flask import request, session, url_for, flash 
+from flask import render_template, current_app, redirect, Blueprint
+from flask import request, session, url_for, flash
 from models import db, Author, Authorization
 from werkzeug.utils import secure_filename
 import os
@@ -35,19 +34,19 @@ def sign():
                 file_path = save_file(logo)
             else:
                 file_path = None
-    
+
             existing_email = Author.query.filter_by(email=request.form["email"]).first()
             existing_name = Author.query.filter_by(name=request.form["name"]).first()
-            
+
             if existing_email is not None or existing_name is not None:
                 flash("user with that name or email already exists")
 
-            else:    
+            else:
                 msg = Message('Subject', sender='w464mercedes@gmail.com', recipients=[request.form["email"]])
                 code = generate_random_string()
-                msg.body = f'Підтвердіть свій обліковий запис: {code}  http://127.0.0.1:5000/check '
+                msg.body = f'Підтвердіть свій обліковий запис: {code}  https://w464.pythonanywhere.com//check '
                 mail.send(msg)
-                
+
                 author = Authorization(email=request.form["email"],
                                     password=request.form["password"],
                                     name=request.form["name"],
@@ -64,7 +63,7 @@ def sign():
 def check():
     if request.method == "POST":
         user = Authorization.query.filter_by(code=request.form["code"]).first()
-        if user: 
+        if user:
             author = Author(email=user.email,
                             password=user.password,
                             name=user.name,
@@ -75,7 +74,7 @@ def check():
             db.session.commit()
             return redirect("/")
         else:
-            flash("incorrect code")    
+            flash("incorrect code")
     return render_template('check.html')
 
 
@@ -92,16 +91,19 @@ def login():
             session["userLogged"] = author.name
             return redirect(url_for("author_part.profile", username=session["userLogged"]))
         else:
-            flash("Невірний пароль або email. <a href='/forgot'>Забули пароль?</a>?")   
+            flash("incorrect password or email. <a href='/forgot'>Забули пароль?</a>?")
     return render_template("login.html")
 
 @login_part.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     if request.method == "POST":
         author = Author.query.filter_by(email=request.form["email"]).first()
-        msg = Message('Subject', sender='w464mercedes@gmail.com', recipients=[request.form["email"]])
-        msg.body = f'Your password - {author.password}  http://127.0.0.1:5000/login'
-        mail.send(msg)
-        return redirect('/login')
+        if author:
+            msg = Message('Subject', sender='w464mercedes@gmail.com', recipients=[request.form["email"]])
+            msg.body = f'Your password - {author.password}  https://w464.pythonanywhere.com/login'
+            mail.send(msg)
+            return redirect('/login')
+        else:
+            flash("email missing")
     return render_template("forgot.html")
 

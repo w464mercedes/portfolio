@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template
-from flask import render_template, redirect
-from flask import request, session, url_for, flash 
+from flask import Blueprint, render_template, redirect
+from flask import request, session, url_for, flash
 from models import db, Author, Messages
 from sqlalchemy import or_
 
@@ -14,12 +13,12 @@ def chat(author_name):
         username = session["userLogged"]
     if "userLogged" not in session or session["userLogged"] != username:
             return redirect(url_for('login'))
-    
+
     authors_list = Author.query.all()
     receiver = Author.query.filter_by(name=username).first()
     author = Author.query.filter_by(name=author_name).first()
     massages_for_me = Messages.query.filter(Messages.author_id == author.id, Messages.receiver_id == receiver.id).all()
-    my_massages = Messages.query.filter(Messages.author_id == receiver.id, Messages.receiver_id == author.id).all() 
+    my_massages = Messages.query.filter(Messages.author_id == receiver.id, Messages.receiver_id == author.id).all()
 
     all_messages = massages_for_me + my_massages
     messages = sorted(all_messages, key=lambda x: x.date)
@@ -34,13 +33,13 @@ def chat(author_name):
             else:
                 message.text = new_text
                 db.session.commit()
-                return redirect(url_for('chat_part.chat', author_name=author_name))  
+                return redirect(url_for('chat_part.chat', author_name=author_name))
         elif len(request.form['text']) < 1:
             flash('Please enter your massage')
         else:
             my_massage = Messages(text=request.form.get('text'),
                                 author_id=receiver.id,
-                                receiver_id=author.id) 
+                                receiver_id=author.id)
             db.session.add(my_massage)
             db.session.commit()
             return redirect(url_for('chat_part.chat', author_name=author_name))
@@ -87,8 +86,8 @@ def delete_message(message_id):
     message = db.session.query(Messages).filter(Messages.id == message_id).first()
     author = Author.query.filter(Author.id == message.receiver_id).first()
     if request.method == 'POST':
-        if message:  
-            db.session.delete(message)   
+        if message:
+            db.session.delete(message)
             db.session.commit()
             return redirect(f'/profile/chat/{author.name}')
     return render_template('delete_message.html',

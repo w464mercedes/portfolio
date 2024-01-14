@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-from pytz import timezone
-from sqlalchemy import DateTime
+
 
 db = SQLAlchemy()
 
@@ -13,7 +12,7 @@ class Article(db.Model):
     content = db.Column(db.String(100))
     author_name = db.Column(db.String(50), db.ForeignKey('author.name'))
     likes = db.relationship('Like', backref='article_like', lazy='dynamic')
-    comments = db.relationship('Comment', backref='article_comments', lazy='dynamic') 
+    comments = db.relationship('Comment', backref='article_comments', lazy='dynamic')
     like_count = db.Column(db.Integer, default=0)
 
     def __str__(self):
@@ -41,7 +40,7 @@ class Author(db.Model):
     likes = db.relationship('Like', backref='author_like', lazy='dynamic')
     articles = db.relationship('Article', backref='author', lazy='dynamic')
     author_comments = db.relationship('Comment', backref='comments_authored', lazy='dynamic')
-    
+
     def __str__(self):
         return self.name
 
@@ -51,9 +50,9 @@ class Comment(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow().replace(microsecond=0))
     article_id = db.Column(db.Integer, db.ForeignKey('article.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
-    parent_comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))  
+    parent_comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
     author = db.relationship('Author', backref='comments', lazy='joined')
-    replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]))  
+    replies = db.relationship('Comment', backref=db.backref('parent', remote_side=[id]))
 
     def __str__(self):
         return self.text
@@ -69,16 +68,16 @@ class Messages(db.Model):
 
     def __str__(self):
         return self.text
-    
+
 class Subscription(db.Model):
     __tablename__ = 'subscription'
     id = db.Column(db.Integer, primary_key=True)
-    subscriber_name = db.Column(db.String(50), db.ForeignKey('author.name'))  
-    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))  
+    subscriber_name = db.Column(db.String(50), db.ForeignKey('author.name'))
+    author_id = db.Column(db.Integer, db.ForeignKey('author.id'))
 
     def __str__(self):
         return f"Subscriber: {self.subscriber_name} -> Author: {self.author_id}"
-    
+
 
 class Authorization(db.Model):
     __tablename__ = 'authorization'

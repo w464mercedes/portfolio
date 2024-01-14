@@ -3,6 +3,9 @@
 <body>
 	<div class="container w-50 bg-light-subtle border shadow-lg border-secondary rounded">
 		<form  method="POST" action="" class="text-center">
+		    {% for msg in get_flashed_messages() %}
+              <div class="flash mb-3">{{msg}}</div>
+              {% endfor %}
 			<h6>Write your email</h6>
 			<div class="form-contact mb-3 d-inline-block">
 				<input type="text" class="form-control mt-3" placeholder="Your email" name="email"  style="width: 200px;">

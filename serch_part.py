@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template
-from flask import render_template
 from flask import request, session
 from models import Article, Author
 
@@ -12,7 +11,7 @@ serch_part = Blueprint('serch_part', __name__,
 def index():
     username = None
     if "userLogged" in session:
-            username = session["userLogged"] 
+            username = session["userLogged"]
     articles_list = Article.query.all()
     authors_list = Author.query.all()
     return render_template("index.html",

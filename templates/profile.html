@@ -21,7 +21,7 @@
     position: fixed;
     top: 90px;
     right: 80px;
-    overflow: auto; 
+    overflow: auto;
     max-height: 80%;
   }
 
@@ -44,13 +44,13 @@
 }
 
 .image-container img {
-  width: 100%; 
-  max-width: 100%; 
-  height: auto; 
-  margin: 0 auto; 
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 .container-info p {
-    margin: 0; 
+    margin: 0;
   }
 </style>
 
@@ -144,21 +144,21 @@
             </div>
           {% endif %}
           {% if author.logo %}
-            <img src="/{{ author.logo }}" alt="Logo" width="100" class="rounded-circle shadow-lg" style="position: relative; transform: translate(-10%, -50%); z-index: 2;"> 
-          {% endif %}           
-        </div> 
+            <img src="/{{author.logo}}" alt="Logo" width="100" class="rounded-circle shadow-lg" style="position: relative; transform: translate(-10%, -50%); z-index: 2;">
+          {% endif %}
+        </div>
         <p class="author-name" style="position: relative; transform: translate(16%, -350%); z-index: 2;">{{ author.name }}</p>
         <div class="container-info" style="position: relative; transform: translate(16%, -150%); z-index: 3;">
           {% if author.age %}
-            <p>age - {{author.age}}</p> 
+            <p>age - {{author.age}}</p>
           {% endif %}
           {% if author.work %}
             <p>work - {{author.work}}</p>
           {% endif %}
           {% if author.hobby %}
-            <p>hobby - {{author.hobby}} </p> 
+            <p>hobby - {{author.hobby}} </p>
           {% endif %}
-        </div> 
+        </div>
         <a href="/profile/{{username}}/set">
           <button class="btn-set-profile btn btn-outline-light btn-sm float-end mb-4  btn-outline-light border shadow-lg border-secondary" style="width: 120px;">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
@@ -207,7 +207,7 @@
   {% for article in author.articles %}
   <div class="container w-50 bg-light-subtle border shadow-lg border-secondary rounded mb-2">
     <div class="row justify-content-center">
-      <div class="col-md-10 mb-3">              
+      <div class="col-md-10 mb-3">
         <div class="author-info mt-2">
           <img src="/{{ author.logo }}" alt="Logo" width="45">{{ author.name }} {{article.date}}
         </div>
@@ -219,7 +219,7 @@
                 {% if article.text %}
                   <h6>{{article.text}}</h6>
                 {% endif%}
-              
+
               <a class="icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);text-decoration: none;
                 color: white;" href="/article/{{article.id}}/comment">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">

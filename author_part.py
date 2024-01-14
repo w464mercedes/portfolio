@@ -1,6 +1,4 @@
-from flask import Blueprint, render_template
-from flask import current_app
-from flask import render_template, redirect
+from flask import Blueprint, render_template, redirect, current_app
 from flask import request, session, url_for
 from models import db, Article, Author, Comment, Subscription, Messages
 from sqlalchemy.orm import sessionmaker
@@ -46,7 +44,7 @@ def author(author_name):
     username = None
     if "userLogged" in session:
         username = session["userLogged"]
-        
+
     author = Author.query.filter_by(name=author_name).first()
     authors_list = Author.query.all()
     subscriber = Author.query.filter_by(name=username).first()
@@ -57,7 +55,7 @@ def author(author_name):
     if request.method == "POST":
         if "userLogged" not in session or session["userLogged"] != username:
             return redirect(url_for('login'))
-        
+
         subscriber = Author.query.filter_by(name=username).first()
         author = Author.query.filter_by(name=author_name).first()
 
@@ -102,18 +100,18 @@ def following(author_name):
     following_id = search(following,'author_id')
     followings = following_serch(following_id)
 
-        
+
     if request.method == "POST":
         if "userLogged" not in session or session["userLogged"] != username:
             return redirect(url_for('login'))
-        
+
 
         subscription = Subscription.query.filter_by(subscriber_name=subscriber.name, author_id=request.form['author.id']).first()
         if subscription:
             db.session.delete(subscription)
             db.session.commit()
             return redirect(url_for('author_part.author', author_name=author.name) + '/following')
-        else:    
+        else:
             subscription = Subscription(subscriber_name=subscriber.name, author_id=request.form['author.id'])
             db.session.add(subscription)
             db.session.commit()
@@ -144,11 +142,11 @@ def follower(author_name):
     my_follower = Subscription.query.filter_by(subscriber_name=username).all()
     my_followers = search(my_follower,'author_id')
     follower_id = search(follower,'subscriber_name')
-    followers = follower_search(follower_id)  
+    followers = follower_search(follower_id)
     if request.method == "POST":
         if "userLogged" not in session or session["userLogged"] != username:
             return redirect(url_for('login'))
-        
+
         subscription = Subscription.query.filter_by(subscriber_name=subscriber.name, author_id=request.form['author.id']).first()
         if subscription:
             db.session.delete(subscription)
@@ -167,7 +165,7 @@ def follower(author_name):
                            username=username,
                            followers=followers,
                            my_followers=my_followers)
-                          
+
 
 @author_part.route("/profile/<username>")
 def profile(username):
@@ -192,17 +190,17 @@ def set_profile(username):
     if "userLogged" in session:
         logged_user = session["userLogged"]
     else:
-        return redirect(url_for("login"))  
+        return redirect(url_for("login"))
     author = db.session.query(Author).filter(Author.name == logged_user).first()
     if request.method == 'POST':
         if 'photo' in request.files and request.files['photo'].filename:
             photo = request.files['photo']
             file_path = save_file(photo)
-            author.photo = file_path  
+            author.photo = file_path
         if 'logo' in request.files and request.files['logo'].filename:
             logo = request.files['logo']
             file_path = save_file(logo)
-            author.logo = file_path  
+            author.logo = file_path
         if 'age' in request.form and request.form['age'].isdigit():
             author.age = int(request.form['age'])
         else:
@@ -216,7 +214,7 @@ def set_profile(username):
         else:
             author.hobby = None
         db.session.commit()
-    
+
         return redirect(url_for("author_part.profile", username=logged_user))
     return render_template('set_profile.html',
                             username=logged_user,

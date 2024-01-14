@@ -15,16 +15,15 @@ load_dotenv()
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DB']
-app.config['FLASK_ADMIN_SWATCH'] = os.environ['ADMIN_THEME']
-app.secret_key = os.environ['SEKRET_KEY']
-app.config['UPLOAD_FOLDER'] = os.environ['UPLOAD_FOLDER']
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://w464:Xxx1941900@w464.mysql.pythonanywhere-services.com/w464$new_db'
+app.secret_key = "s;lf;ewlkm;leqfmql"
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 # mail service
-app.config['MAIL_SERVER'] = os.environ['MAIL_SERVER']
-app.config['MAIL_PORT'] = os.environ['MAIL_PORT']
-app.config['MAIL_USE_TLS'] = os.environ['MAIL_USE_TLS']
-app.config['MAIL_USERNAME'] = os.environ['MAIL_USERNAME'] 
-app.config['MAIL_PASSWORD'] = os.environ['MAIL_PASSWORD']
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'w464mercedes@gmail.com'
+app.config['MAIL_PASSWORD'] = 'ssyf nhqg voxm fksf'
 # blueprint parts
 app.register_blueprint(author_part)
 app.register_blueprint(article_part)
@@ -48,6 +47,5 @@ admin.add_view(ModelView(Messages, db.session))
 admin.add_view(ModelView(Like, db.session))
 admin.add_view(ModelView(Authorization, db.session))
 
-if __name__ == '__main__':
-    app.run()
+
 

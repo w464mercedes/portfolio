@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, redirect
 from flask import current_app
-from flask import render_template, redirect
-from flask import request, session, url_for, flash 
+from flask import request, session, url_for, flash
 from models import db, Article, Author, Comment, Like
 import os
 from werkzeug.utils import secure_filename
@@ -23,7 +22,7 @@ def add_article(username):
     if request.method == "POST":
         if "userLogged" in session:
             username = session["userLogged"]
-        
+
         author = Author.query.filter_by(name=username).first()
         file_path = None
         if request.files['content']:
@@ -33,7 +32,7 @@ def add_article(username):
             article = Article(
                 text=request.form['text'],
                 content=file_path if file_path else None)
-            author.articles.append(article) 
+            author.articles.append(article)
             db.session.add(article)
             db.session.commit()
             return redirect('/')
@@ -63,9 +62,9 @@ def delete_article(article_id):
 def update_article(article_id):
     username = None
     if "userLogged" in session:
-        username = session["userLogged"]          
+        username = session["userLogged"]
     article = db.session.query(Article).filter(Article.id == article_id).first()
-    if request.method == 'POST': 
+    if request.method == 'POST':
         content = request.files['content']
         text = request.form['text']
         file_path = None
@@ -82,7 +81,7 @@ def like(article_id):
     username = None
     if "userLogged" in session:
         username = session["userLogged"]
-    
+
         like = Like.query.filter_by(article_id=article_id, author_name=username).first()
         article = Article.query.filter_by(id=article_id).first()
         if like:
@@ -97,7 +96,7 @@ def like(article_id):
             article.likes.append(like)
             article.like_count = article.like_count + 1
             db.session.add(like)
-            db.session.commit()   
+            db.session.commit()
     return redirect('/')
 
 @article_part.route('/article/<int:article_id>/comment', methods=["GET", "POST"])
@@ -105,7 +104,7 @@ def article_comment(article_id):
     username = None
     if "userLogged" in session:
         username = session["userLogged"]
-    
+
     author = Author.query.filter_by(name=username).first()
     article = Article.query.filter(Article.id == article_id).first()
     comments = article.comments
@@ -113,11 +112,11 @@ def article_comment(article_id):
     if request.method == 'POST':
         if "userLogged" not in session or session["userLogged"] != username:
             return redirect(url_for('login'))
-        
+
         if len(request.form['comment_text']) < 1:
             flash('Please enter your comment')
 
-        elif 'parent_comment_id' in request.form and request.form['parent_comment_id']: 
+        elif 'parent_comment_id' in request.form and request.form['parent_comment_id']:
             parent_comment_id = int(request.form['parent_comment_id'])
             recomment_text = request.form['comment_text']
             recomment = Comment(text=recomment_text,
@@ -138,7 +137,7 @@ def article_comment(article_id):
                            authors=authors_list,
                            username=username,
                            comments=comments)
-                           
+
 @article_part.route('/comment/delete/<int:comment_id>', methods=['GET', 'POST'])
 def delete_comment(comment_id):
 
