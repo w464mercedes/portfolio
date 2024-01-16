@@ -170,7 +170,7 @@ def follower(author_name):
 @author_part.route("/profile/<username>")
 def profile(username):
     if "userLogged" not in session or session["userLogged"] != username:
-        return redirect('/login')
+        return redirect('/login_part.login')
     authors_list = Author.query.all()
     author = Author.query.filter_by(name=username).first()
     return render_template("profile.html",
