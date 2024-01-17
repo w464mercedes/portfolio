@@ -111,7 +111,7 @@ def article_comment(article_id):
     authors_list = Author.query.all()
     if request.method == 'POST':
         if "userLogged" not in session or session["userLogged"] != username:
-            return redirect(url_for('login'))
+            return redirect(url_for('login_part.login'))
 
         if len(request.form['comment_text']) < 1:
             flash('Please enter your comment')
