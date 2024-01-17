@@ -11,22 +11,25 @@ from chat_part import chat_part
 from flask_admin.contrib.sqla import ModelView
 from flask_login import LoginManager, login_user, current_user
 from wtforms_alchemy import ModelForm
-login_manager = LoginManager()
+from dotenv import load_dotenv
+import os
 
+login_manager = LoginManager()
 load_dotenv()
 
 app = Flask(__name__)
-login_manager.init_app(app)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+pymysql://w464:Xxx1941900@w464.mysql.pythonanywhere-services.com/w464$new_db'
-app.secret_key = "s;lf;ewlkm;leqfmql"
-app.config['UPLOAD_FOLDER'] = 'static/uploads'
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DB"]
+app.secret_key = os.environ["SEKRET_KEY"]
+app.config['UPLOAD_FOLDER'] = os.environ["UPLOAD_FOLDER"]
 # mail service
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'w464mercedes@gmail.com'
-app.config['MAIL_PASSWORD'] = 'ssyf nhqg voxm fksf'
+app.config['MAIL_SERVER'] = os.environ["MAIL_SERVER"]
+app.config['MAIL_PORT'] = os.environ["MAIL_PORT"]
+app.config['MAIL_USE_TLS'] = os.environ["MAIL_USE_TLS"]
+app.config['MAIL_USERNAME'] = os.environ["MAIL_USERNAME"]
+app.config['MAIL_PASSWORD'] = os.environ["MAIL_PASSWORD"]
 # blueprint parts
 app.register_blueprint(author_part)
 app.register_blueprint(article_part)
@@ -36,6 +39,7 @@ app.register_blueprint(chat_part)
 
 mail = Mail(app)
 db.init_app(app)
+login_manager.init_app(app)
 
 class MicroBlogModelView(ModelView):
     def is_accessible(self):
