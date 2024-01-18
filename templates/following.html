@@ -24,7 +24,7 @@
     position: fixed;
     top: 90px;
     right: 80px;
-    overflow: auto; 
+    overflow: auto;
     max-height: 80%;
   }
 
@@ -55,13 +55,13 @@
 }
 
 .image-container img {
-  width: 100%; 
-  max-width: 100%; 
-  height: auto; 
-  margin: 0 auto; 
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
 }
 .container-info p {
-    margin: 0; 
+    margin: 0;
   }
 </style>
 
@@ -176,19 +176,19 @@
                   {% endif %}
                     {% if author.logo %}
                     <img src="/{{ author.logo }}" alt="Logo" width="100" class="rounded-circle shadow-lg" style="position: relative;
-               transform: translate(-10%, -50%); z-index: 2;"> 
-                  {% endif %}          
-              </div> 
+               transform: translate(-10%, -50%); z-index: 2;">
+                  {% endif %}
+              </div>
               <p class="author-name" style="position: relative; transform: translate(16%, -380%); z-index: 2;">{{ author.name }}</p>
                 <div class="container-info" style="position: relative; transform: translate(16%, -150%); z-index: 3;">
           {% if author.age %}
-            <p>age - {{author.age}}</p> 
+            <p>age - {{author.age}}</p>
           {% endif %}
           {% if author.work %}
             <p>work - {{author.work}}</p>
           {% endif %}
           {% if author.hobby %}
-            <p>hobby - {{author.hobby}} </p> 
+            <p>hobby - {{author.hobby}} </p>
           {% endif %}
       </div>
     </div>
@@ -200,7 +200,7 @@
         <div class="row w-100 justify-content-left">
           <div class="col-6 text-center border shadow-lg bg-body-tertiary rounded mb-2" style="margin-left:25px; width: 218px;">
             <a href="/author/{{author.name}}/following" style="text-decoration: none; color: white;">
-              <h3>Followings 
+              <h3>Followings
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" class="bi bi-check-circle text-primary" viewBox="0 0 16 16">
                   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                   <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
@@ -213,7 +213,7 @@
               <h3>Followers</h3>
             </a>
           </div>
-        </div>  
+        </div>
         <div class="container">
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for author in followings %}
@@ -227,7 +227,7 @@
                     </a></p>
                     <div class="mt-auto">
                       <div class="btn-group">
-                        {% if username != author.name %}         
+                        {% if username != author.name %}
                           {% if author.id in followers %}
                             <form method="POST" action="/author/{{ author_page }}/following" enctype="multipart/form-data">
                               <input type="hidden" id="author_id"  value="{{ author.id }}" name="author.id">
@@ -236,8 +236,9 @@
                                   <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
                                   <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
                                 </svg> Unsubscribe</button>
-                            </form> 
+                            </form>
                           {% else %}
+                          {% if username %}
                             <form method="POST" action="/author/{{ author_page }}/following" enctype="multipart/form-data">
                               <input type="hidden" id="author_id" value="{{ author.id }}" name="author.id">
                               <button class="btn btn-outline-light btn-sm mb-4 border shadow-lg border-secondary" style="width: 150px;">
@@ -246,7 +247,17 @@
                                   <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
                                 </svg> Subscribe
                               </button>
-                            </form> 
+                            </form>
+                            {% else %}
+                              <a href="/login">
+                                <button class="btn btn-outline-light btn-sm mb-4 border shadow-lg border-secondary" style="width: 150px;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+                                    <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4"/>
+                                    <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1z"/>
+                                  </svg> Subscribe
+                                </button>
+                              </a>
+                            {% endif %}
                           {% endif %}
                         {% endif %}
                       </div>
