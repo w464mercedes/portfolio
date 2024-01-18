@@ -1,6 +1,6 @@
 {% extends "layout.html"%}
-
 {% block content %}
+
 <body>
 	<div class="container w-50 bg-light-subtle border shadow-lg border-secondary rounded">
 		<form method="POST" action="/profile/{{username}}/set" enctype="multipart/form-data">
@@ -10,11 +10,11 @@
 			</div>
 			<div class="form-contact mb-3">
 			  <label for="floatingInput">work</label>
-			  <input type="text" class="form-control" name="work" value="{% if author.work %}{{ author.work }}{% endif %}"> 
+			  <input type="text" class="form-control" name="work" value="{% if author.work %}{{ author.work }}{% endif %}">
 			</div>
 			<div class="form-contact mb-3">
 			  <label for="floatingInput">hobby</label>
-			  <input type="text" class="form-control" name="hobby" value="{% if author.hobby %}{{ author.hobby }}{% endif %}"> 
+			  <input type="text" class="form-control" name="hobby" value="{% if author.hobby %}{{ author.hobby }}{% endif %}">
 			</div>
 			<div class="container mb-3">
                 <label for="logoInput" class=" icon-link-hover" style="--bs-icon-link-transform: translate3d(0, -.125rem, 0);">
@@ -39,4 +39,5 @@
 		</form>
 	</div>
 </body>
+
 {% endblock %}

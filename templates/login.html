@@ -1,5 +1,6 @@
 {% extends "layout.html"%}
 {% block content %}
+
 <body>
 	<div class="container w-50 bg-light-subtle border shadow-lg border-secondary rounded">
 		<form method="POST" action="/login">
@@ -12,7 +13,7 @@
 			</div>
 			<div class="form-contact mb-3">
 			  <label for="floatingInput">Password</label>
-			  <input type="text" class="form-control" name="password"> 
+			  <input type="text" class="form-control" name="password">
 			</div>
 			<button class="mb-3 btn btn-outline-light" style="width: 120px;">
 				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -23,4 +24,5 @@
 		<a href="/sign"><button type="button" class="btn btn-warning  shadow-lg mb-3"style="width: 120px;">Sign-up</button></a>
 	</div>
 </body>
+
 {% endblock %}

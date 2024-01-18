@@ -1,69 +1,5 @@
 {% extends "layout.html"%}
 {% block content %}
-<style>
-  .button-container {
-    width: 200px;
-    margin-left: 150px;
-    margin-bottom: 5px;
-    position: fixed;
-    margin-top: 20px;
-  }
-  .btn-set-profile {
-    position: relative;
-    bottom: 10px;
-    right: 10px;
-    float: left;
-  }
-
-  .custom-button {
-    float: left;
-  }
-
-  .user-list-container {
-    width: 200px;
-    position: fixed;
-    top: 90px;
-    right: 80px;
-    overflow: auto; 
-    max-height: 80%;
-  }
-
-  .following-list-container {
-  width: 200px;
-  position: fixed;
-  margin-top: 20px;
-  right: 80px;
-  top:250px;
-}
-
-  .user-list-title {
-    text-align: center;
-    background-color: #333;
-    color: white;
-    padding: 5px;
-  }
-
-  .user-list {
-    padding: 5px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    margin-bottom: 5px;
-  }
-  .author-link {
-    text-decoration: none;
-    color: white;
-}
-
-.image-container img {
-  width: 100%; 
-  max-width: 100%; 
-  height: auto; 
-  margin: 0 auto; 
-}
-.container-info p {
-    margin: 0; 
-  }
-</style>
 
 <div class="button-container">
  {% if username %}
@@ -153,19 +89,19 @@
                   {% endif %}
                     {% if author.logo %}
                     <img src="/{{ author.logo }}" alt="Logo" width="100" class="rounded-circle shadow-lg" style="position: relative;
-               transform: translate(-10%, -50%); z-index: 2;"> 
-                  {% endif %}          
-              </div> 
+               transform: translate(-10%, -50%); z-index: 2;">
+                  {% endif %}
+              </div>
               <p class="author-name" style="position: relative; transform: translate(16%, -380%); z-index: 2;">{{ author.name }}</p>
                 <div class="container-info" style="position: relative; transform: translate(16%, -150%); z-index: 3;">
           {% if author.age %}
-            <p>age - {{author.age}}</p> 
+            <p>age - {{author.age}}</p>
           {% endif %}
           {% if author.work %}
             <p>work - {{author.work}}</p>
           {% endif %}
           {% if author.hobby %}
-            <p>hobby - {{author.hobby}} </p> 
+            <p>hobby - {{author.hobby}} </p>
           {% endif %}
       </div>
     </div>

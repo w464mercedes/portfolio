@@ -1,46 +1,5 @@
 {% extends "layout.html"%}
-
-
-
 {% block content %}
-<style>
-  .button-container {
-    width: 200px;
-    margin-left: 150px;
-    margin-bottom: 5px;
-    position: fixed;
-    margin-top: 20px;
-  }
-
-  .custom-button {
-    float: left;
-  }
-
-  .user-list-container {
-    width: 200px;
-    position: fixed;
-    top: 90px;
-    right: 80px;
-    overflow: auto; /* Додали прокрутку */
-    max-height: 80%; /* Максимальна висота для прокрутки */
-  }
-
-  .user-list-title {
-    text-align: center;
-    background-color: #333;
-    color: white;
-    padding: 5px;
-  }
-
-  .user-list {
-    padding: 5px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    margin-bottom: 5px;
-  }
-</style>
-
-
 
 <body>
     <div class="container w-50 bg-light-subtle text-center border shadow-lg border-secondary rounded">
@@ -50,6 +9,7 @@
         </form>
         <p></p>
         <p><a href="/article/{{article_id}}/comment" class="btn btn-primary">Cancel</a></p>
-    </div>    
+    </div>
 </body>
+
 {% endblock %}

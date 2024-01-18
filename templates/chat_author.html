@@ -1,60 +1,5 @@
 {% extends "layout.html"%}
 {% block content %}
-<style>
-  .button-container {
-    width: 200px;
-    margin-left: 150px;
-    margin-bottom: 5px;
-    position: fixed;
-    margin-top: 20px;
-  }
-
-  .custom-button {
-    float: left;
-  }
-
-  .user-list-container {
-    width: 200px;
-    position: fixed;
-    top: 90px;
-    right: 80px;
-    overflow: auto; 
-    max-height: 80%;
-  }
-
-  .user-list-title {
-    text-align: center;
-    background-color: #333;
-    color: white;
-    padding: 5px;
-  }
-
-  .user-list {
-    padding: 5px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-    margin-bottom: 5px;
-  }
-  .author-link {
-    text-decoration: none;
-    color: white;
-}
-
-.image-container img {
-  width: 100%; 
-  max-width: 100%; 
-  height: auto; 
-  margin: 0 auto; 
-}
-
-.comment-text {
-    max-width: 100%; 
-    overflow-wrap: break-word;}
-
-.text-right p {
-        text-align: right;
-    }
-</style>
 
 <div class="button-container">
  {% if username %}
@@ -159,13 +104,13 @@
         <div class="reply">
           <div class="alert alert-secondary" role="alert">
             <h5>Chat with:</h5>
-              <img src="/{{ author.logo }}" alt="Logo" width="45"><a href="/author/{{ author.name }}" class="author-link"> {{ author.name }}</a> 
+              <img src="/{{ author.logo }}" alt="Logo" width="45"><a href="/author/{{ author.name }}" class="author-link"> {{ author.name }}</a>
                 <hr>
                   {% for message in massages %}
                     {% if message.author_id|int == author.id|int %}
                       <div class="text-left">
                         <p>{{ message.date.strftime('%Y-%m-%d %H:%M') }}</p>
-                        <p id="message-{{ message.id }}">{{ message.text }}</p> 
+                        <p id="message-{{ message.id }}">{{ message.text }}</p>
                       </div>
                       <hr>
                     {% else %}
@@ -189,7 +134,7 @@
                             Edit
                           </a>
                        </div>
-                      <hr>    
+                      <hr>
                     {% endif %}
                   {% endfor %}
                         <form class="massage-form" action="/profile/chat/{{ author.name }}" method="post">
@@ -200,8 +145,8 @@
     <textarea class="form-control mb-3" name="text" placeholder="Write your massage" id="floatingTextarea"></textarea>
     <button class="mb-3 btn btn-outline-light">Send</button>
   </form>
-</div>  
-    </div> 
+</div>
+    </div>
   </div>
   <script>
   document.querySelectorAll('.edit-button').forEach(function(button) {
@@ -228,4 +173,3 @@
 
 {% endblock %}
 
- 
